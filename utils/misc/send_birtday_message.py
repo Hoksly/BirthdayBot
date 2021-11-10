@@ -53,7 +53,7 @@ def check_dates_for_all(names_dates: dict):
 
 
 def create_message_once(name, age):
-    message = 'А сегодня день рождения отмечает {0}. С днюхой!'.format(name)
+    message = 'А сегодня день рождения отмечает {0}. С днюхой, {1}!'.format(name, name.split()[1])
     return message
 
 
@@ -70,8 +70,8 @@ def create_message_month(names_dates: list):
 
 async def send_message_to_chat(message, chat_id=CHAT_ID):
     print("GG", message)
-    await bot.send_message(chat_id=chat_id, text=message)
-    print("WTF???")
+    #await bot.send_message(chat_id=chat_id, text=message)
+    #print("WTF???")
 
 
 def check_date_monthly(names_dates: dict):
@@ -86,22 +86,22 @@ def check_date_monthly(names_dates: dict):
 async def main_process():
     global SENT_TODAY
     #print("HERE")
-    print("YES", SENT_TODAY)
+    #print("YES", SENT_TODAY)
     names_dates = parse_file()
     SENT_TODAY = False
     while True:
-        if 0 < datetime.now().hour < 2:
+        if 0 <= datetime.now().hour <= 2:
             SENT_TODAY = False
 
         if not SENT_TODAY:
             SENT_TODAY = True
             birthdays = check_dates_for_all(names_dates)
-            print(birthdays)
+            #print(birthdays)
             for el in birthdays:
-                print("SENDIG???")
+                #print("SENDIG???")
                 await send_message_to_chat(create_message_once(el[0], el[1]))
 
-        sleep(7200)
+        sleep(7500)
 
 
 async def send_month_message():
